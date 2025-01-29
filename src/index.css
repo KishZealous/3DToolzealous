@@ -1,0 +1,190 @@
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+}
+
+.app-container {
+  background-color: #fcfcfc;
+  width: 100%; /* 70% width for the center panel */
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Needed to position the model loader inside */
+
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+.AppBg{
+
+  background-color: var(--app-bg-color, #8b8b8b); /* Fallback to #8b8b8b if variable not set */
+  transition: background-color 0.3s ease; /* Optional smooth transition */
+}
+
+.hierachystyle{
+
+  background-color: #f3f3f3;
+  width: 15%; /* Adjust based on layout */
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center; /* Center horizontally */
+  padding-top: 10px; /* Add some spacing at the top */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+.Inspectorstyle{
+
+  background-color: #f3f3f3;
+  width: 15%; /* Adjust based on layout */
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center; /* Center horizontally */
+  padding-top: 10px; /* Add some spacing at the top */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+/* General Container */
+.model-loader-container {
+  width: 100%; /* Full width inside app-container */
+  height: 100%; /* Full height inside app-container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.upload-options {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10; /* Ensure it's above the canvas */
+  pointer-events: none; /* Prevent interaction with the canvas */
+}
+
+/* Drag and Drop Message */
+.drag-drop-message {
+  font-size: 1.2em;
+  
+}
+
+.file-input {
+  margin-top: 10px;
+  pointer-events: auto; /* Allow file input to be clickable */
+  padding-left: 10%;
+  position: relative;
+  left: 10%;
+  
+}
+
+.Options{
+
+
+  font-size: 1em;
+  color: white;
+  background-color: #1976d2; /* Matches MUI's contained button default */
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.HierarchyHeader{
+
+  font-size: medium;
+}
+
+
+/* Container styles */
+.container {
+  resize: horizrowontal;
+  overflow: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Form label styles */
+.label {
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+/* Radio group styles */
+.radioGroup {
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+/* Sheet (color circle) styles */
+.sheet {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Radio button styles */
+.radio {
+  display: contents;
+  --variant-borderWidth: 2px;
+}
+
+/* Focus styles */
+.focusVisible {
+  outline-width: 2px;
+}
+
+.overlay-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Allows clicks through to underlying elements */
+}
+
+.overlay-controls button {
+  pointer-events: auto; /* Re-enable clicks for the button */
+}
+
+canvas {
+  position: relative;
+  z-index: 0;
+}
+
