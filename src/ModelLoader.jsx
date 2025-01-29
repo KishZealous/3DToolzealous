@@ -62,9 +62,22 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
   useEffect(() => {
     if (!showPreview) {
       setHierarchy([]); // Clear hierarchy
-      setSelectedModel(null); // Reset selected model
+    // Removed setSelectedModel(null) to retain the model selection
+
+    // Reset camera and controls
+    if (controlsRef.current) {
+      controlsRef.current.reset(); // Reset OrbitControls
+      const camera = controlsRef.current.object;
+      camera.position.set(0, 0, 3); // Initial position from Canvas props
+      camera.fov = 40; // Initial FOV from Canvas props
+      camera.updateProjectionMatrix();
+      controlsRef.current.update();
+    }
+  
     }
   }, [showPreview, setHierarchy, setSelectedModel]);
+
+  
 
   const handleFile = (file) => {
     if (file && (file.name.endsWith('.gltf') || file.name.endsWith('.glb'))) {
@@ -120,18 +133,21 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <Grid
-          position={[0, -0.5, 0]}
-          cellSize={0.5}
-          cellThickness={0.5}
-          cellColor={"#dfdfdf"}
-          sectionSize={2.5}
-          sectionThickness={1}
-          sectionColor={"#dfdfdf"}
-          fadeDistance={30}
-          fadeStrength={1}
-          infiniteGrid
-        />
+        {!showPreview && (
+    <Grid
+      position={[0, -0.5, 0]}
+      cellSize={0.5}
+      cellThickness={0.5}
+      cellColor={"#dfdfdf"}
+      sectionSize={2.5}
+      sectionThickness={1}
+      sectionColor={"#dfdfdf"}
+      fadeDistance={30}
+      fadeStrength={1}
+      infiniteGrid
+    />
+  )}
+
         <ambientLight intensity={0.2} />
         <OrbitControls ref={controlsRef} />
         <ContactShadows position={[0, -0.4, 0]} opacity={0.5} scale={10} blur={1.5} far={1} />

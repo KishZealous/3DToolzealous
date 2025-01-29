@@ -11,15 +11,14 @@ export default function App() {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <div className="main-layout">
-      {/* Show Hierarchy when not in preview mode */}
+    <div className={`main-layout ${showPreview ? "preview-mode" : ""}`}>
       {!showPreview && (
         <div className="hierachystyle">
           <Hierarchy hierarchy={hierarchy} />
         </div>
       )}
 
-      <div className="app-container">
+      <div className={`app-container ${showPreview ? "preview-mode" : ""}`}>
         <ModelLoader
           setHierarchy={setHierarchy}
           setSelectedModel={setSelectedModel}
@@ -27,17 +26,15 @@ export default function App() {
           setShowPreview={setShowPreview}
           showPreview={showPreview}
         />
+
+        {/* Exit button in top-right when in preview mode */}
         {showPreview && (
-          <button
-            className="exit-preview"
-            onClick={() => setShowPreview(false)}
-          >
+          <button className="exit-preview" onClick={() => setShowPreview(false)}>
             Exit Preview
           </button>
         )}
       </div>
 
-      {/* Show Inspector when not in preview mode */}
       {!showPreview && (
         <div className="Inspectorstyle">
           <Insceptor
@@ -50,3 +47,5 @@ export default function App() {
     </div>
   );
 }
+
+

@@ -1,20 +1,25 @@
 
+* {
+  box-sizing: border-box;
+}
+
 .main-layout {
   display: flex;
   flex-direction: row;
   height: 100vh;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .app-container {
   background-color: #fcfcfc;
-  width: 100%; /* 70% width for the center panel */
+  width: 70%; /* Changed from 100% to 70% */
   height: 100%;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative; /* Needed to position the model loader inside */
+  position: relative;
 
 }
 
@@ -46,30 +51,16 @@
   transition: background-color 0.3s ease; /* Optional smooth transition */
 }
 
-.hierachystyle{
-
+.hierachystyle,
+.Inspectorstyle {
   background-color: #f3f3f3;
-  width: 15%; /* Adjust based on layout */
+  width: 15%;
   height: 100%;
   display: flex;
-  flex-direction: column; /* Arrange children vertically */
-  justify-content: flex-start; /* Align items to the top */
-  align-items: center; /* Center horizontally */
-  padding-top: 10px; /* Add some spacing at the top */
-  box-sizing: border-box; /* Include padding in width/height calculations */
-}
-
-.Inspectorstyle{
-
-  background-color: #f3f3f3;
-  width: 15%; /* Adjust based on layout */
-  height: 100%;
-  display: flex;
-  flex-direction: column; /* Arrange children vertically */
-  justify-content: flex-start; /* Align items to the top */
-  align-items: center; /* Center horizontally */
-  padding-top: 10px; /* Add some spacing at the top */
-  box-sizing: border-box; /* Include padding in width/height calculations */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 10px;
 }
 
 /* General Container */
@@ -125,10 +116,9 @@
 
 /* Container styles */
 .container {
-  resize: horizrowontal;
+  resize: horizontal; /* Corrected from 'horizrowontal' */
   overflow: auto;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 0 16px;
 }
 
 /* Form label styles */
@@ -184,7 +174,49 @@
 }
 
 canvas {
-  position: relative;
-  z-index: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* Fullscreen mode for preview */
+.preview-mode {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+}
+
+/* Exit button in the top-right corner */
+.exit-preview {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1100;
+}
+
+.exit-preview:hover {
+  background-color: rgba(255, 0, 0, 1);
+}
+
+
+/* Hide sidebar panels when in preview mode */
+.hide-in-preview {
+  display: none !important;
 }
 
