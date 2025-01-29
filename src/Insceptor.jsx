@@ -20,7 +20,7 @@ const BgcustomColors = ['#ffffff', '#e7e7e7', '#c1c1c1', '#2c2c2c'];
 
 const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview }) => {
   if (!selectedModel) {
-    return <div>No model selected</div>;
+    return <div className="no-model-message">No model Uploaded</div>;
   }
 
   return (

@@ -3,6 +3,7 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, ContactShadows, Environment, Center, Html, Grid } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
+import { Card, CardContent, Typography, Button } from "@mui/material"
 
 const extractHierarchy = (object, parentPath = '') => {
   const hierarchy = [];
@@ -157,19 +158,30 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
         </Center>
 
         {!uploadedModel && !loading && (
-          <Html center>
-            <div className="upload-options">
-              <div className="drag-drop-message">
-                Drag and drop a 3D model (.gltf or .glb) here or choose a file
-              </div>
-              <input
-                type="file"
-                accept=".gltf,.glb"
-                onChange={handleFileInputChange}
-                className="file-input"
-              />
-            </div>
-          </Html>
+         <Html center>
+         <Card className="upload-options">
+           <CardContent>
+             <Typography variant="h6" className="drag-drop-message">
+               Drag and drop a 3D model (.gltf or .glb) here or choose a file
+             </Typography>
+             <Button
+               variant="contained"
+               component="label"
+               fullWidth
+               className="file-input"
+             >
+               Upload File
+               <input
+                 type="file"
+                 accept=".gltf,.glb"
+                 onChange={handleFileInputChange}
+                 hidden
+               />
+             </Button>
+           </CardContent>
+         </Card>
+       </Html>
+       
         )}
 
         {loading && (

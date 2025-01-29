@@ -74,29 +74,48 @@
 }
 
 .upload-options {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   text-align: center;
-  z-index: 10; /* Ensure it's above the canvas */
-  pointer-events: none; /* Prevent interaction with the canvas */
+  width: 300px;
+  max-width: 90%;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Drag and Drop Message */
 .drag-drop-message {
+  font-weight: 600;
   font-size: 1.2em;
-  
+  color: #333;
+  margin-bottom: 10px;  
 }
 
 .file-input {
-  margin-top: 10px;
-  pointer-events: auto; /* Allow file input to be clickable */
-  padding-left: 10%;
-  position: relative;
-  left: 10%;
+  width: 100%;
+  padding: 10px;
+  border: 2px dashed #1976d2;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
   
 }
+
+.file-input:hover {
+  background-color: #e3f2fd;
+  border-color: #0d47a1;
+}
+
+.file-input:focus {
+  outline: none;
+  border-color: #0d47a1;
+  box-shadow: 0px 0px 5px rgba(13, 71, 161, 0.5);
+}
+
 
 .Options{
 
@@ -220,3 +239,14 @@ canvas {
   display: none !important;
 }
 
+/* Apply to the "No model Uploaded" message */
+.no-model-message {
+  font-weight: bold;  /* Make text bold */
+  text-align: center; /* Center text */
+  font-size: 1.2em;   /* Adjust size for better visibility */
+  color: #333;        /* Darker text for readability */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;       /* Take full height to properly center */
+}
