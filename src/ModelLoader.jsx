@@ -3,7 +3,7 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, ContactShadows, Environment, Center, Html, Grid } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
-import { Card, CardContent, Typography, Button } from "@mui/material"
+import { Card, CardContent, Typography, Button } from "@mui/material";
 
 const extractHierarchy = (object, parentPath = '') => {
   const hierarchy = [];
@@ -55,48 +55,58 @@ const ModelViewer = ({ model }) => {
   return <primitive object={model.scene} />;
 };
 
-const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview }) => {
+const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setEmbedUrl }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
   const controlsRef = useRef();
 
   useEffect(() => {
     if (!showPreview) {
-      setHierarchy([]); // Clear hierarchy
-    // Removed setSelectedModel(null) to retain the model selection
-
-    // Reset camera and controls
-    if (controlsRef.current) {
-      controlsRef.current.reset(); // Reset OrbitControls
-      const camera = controlsRef.current.object;
-      camera.position.set(0, 0, 3); // Initial position from Canvas props
-      camera.fov = 40; // Initial FOV from Canvas props
-      camera.updateProjectionMatrix();
-      controlsRef.current.update();
+      setHierarchy([]);
     }
-  
+  }, [showPreview, setHierarchy]);
+
+  const uploadFileToNetlify = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/.netlify/functions/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const data = await response.json();
+      console.log('Upload successful:', data.url);
+      setEmbedUrl(data.url); // Set the embed URL in parent state
+      return data.url;
+    } catch (error) {
+      console.error('Upload failed:', error);
+      return null;
     }
-  }, [showPreview, setHierarchy, setSelectedModel]);
+  };
 
-  
-
-  const handleFile = (file) => {
+  const handleFile = async (file) => {
     if (file && (file.name.endsWith('.gltf') || file.name.endsWith('.glb'))) {
       const reader = new FileReader();
       setLoading(true);
 
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const loader = new GLTFLoader();
-        loader.parse(e.target.result, '', (gltf) => {
+        try {
+          const gltf = await loader.parseAsync(e.target.result, '');
           setUploadedModel(gltf);
           setSelectedModel(gltf);
           const extractedHierarchy = extractHierarchy(gltf.scene);
           setHierarchy(extractedHierarchy);
-          setLoading(false);
-        }, (error) => {
+          
+          // Upload to Netlify Blob after successful parse
+          await uploadFileToNetlify(file);
+        } catch (error) {
           console.error('Error loading model:', error);
+        } finally {
           setLoading(false);
-        });
+        }
       };
 
       reader.onerror = (error) => {
@@ -135,19 +145,19 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
         onDragOver={handleDragOver}
       >
         {!showPreview && (
-    <Grid
-      position={[0, -0.5, 0]}
-      cellSize={0.5}
-      cellThickness={0.5}
-      cellColor={"#dfdfdf"}
-      sectionSize={2.5}
-      sectionThickness={1}
-      sectionColor={"#dfdfdf"}
-      fadeDistance={30}
-      fadeStrength={1}
-      infiniteGrid
-    />
-  )}
+          <Grid
+            position={[0, -0.5, 0]}
+            cellSize={0.5}
+            cellThickness={0.5}
+            cellColor={"#dfdfdf"}
+            sectionSize={2.5}
+            sectionThickness={1}
+            sectionColor={"#dfdfdf"}
+            fadeDistance={30}
+            fadeStrength={1}
+            infiniteGrid
+          />
+        )}
 
         <ambientLight intensity={0.2} />
         <OrbitControls ref={controlsRef} />
@@ -158,30 +168,29 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
         </Center>
 
         {!uploadedModel && !loading && (
-         <Html center>
-         <Card className="upload-options">
-           <CardContent>
-             <Typography variant="h6" className="drag-drop-message">
-               Drag and drop a 3D model (.gltf or .glb) here or choose a file
-             </Typography>
-             <Button
-               variant="contained"
-               component="label"
-               fullWidth
-               className="file-input"
-             >
-               Upload File
-               <input
-                 type="file"
-                 accept=".gltf,.glb"
-                 onChange={handleFileInputChange}
-                 hidden
-               />
-             </Button>
-           </CardContent>
-         </Card>
-       </Html>
-       
+          <Html center>
+            <Card className="upload-options">
+              <CardContent>
+                <Typography variant="h6" className="drag-drop-message">
+                  Drag and drop a 3D model (.gltf or .glb) here or choose a file
+                </Typography>
+                <Button
+                  variant="contained"
+                  component="label"
+                  fullWidth
+                  className="file-input"
+                >
+                  Upload File
+                  <input
+                    type="file"
+                    accept=".gltf,.glb"
+                    onChange={handleFileInputChange}
+                    hidden
+                  />
+                </Button>
+              </CardContent>
+            </Card>
+          </Html>
         )}
 
         {loading && (
