@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Embedded from './Embedded'; // Import the Embedded component for the overlay
 
 const StyledListItem = styled(ListItem)(({ theme, level }) => ({
   paddingLeft: theme.spacing(level * 2),
@@ -19,21 +18,10 @@ const StyledListItem = styled(ListItem)(({ theme, level }) => ({
 
 const Hierarchy = ({ hierarchy }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
   };
-
-  const handleUploadClick = () => {
-    setDialogOpen(true); // Open the dialog when "Upload" is clicked
-  };
-
-  const handleCloseDialog = () => {
-    setDialogOpen(false); // Close the dialog
-  };
-  const [embedUrl, setEmbedUrl] = useState('');
-
 
   return (
     <Box 
@@ -88,14 +76,10 @@ const Hierarchy = ({ hierarchy }) => {
         fullWidth
         size="small"
         sx={{ textTransform: 'none' }}
-        onClick={handleUploadClick}
+        // Upload functionality (keeping button)
       >
-        Upload
+        Upload to Aws
       </Button>
-
-      {/* Embedded Dialog for success message and embed code */}
-      <Embedded open={dialogOpen} onClose={handleCloseDialog} embedUrl={embedUrl} />
-
     </Box>
   );
 };

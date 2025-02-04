@@ -180,7 +180,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
                   fullWidth
                   className="file-input"
                 >
-                  Upload File
+                 Browes Files
                   <input
                     type="file"
                     accept=".gltf,.glb"
