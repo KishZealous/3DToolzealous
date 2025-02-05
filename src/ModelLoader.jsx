@@ -70,7 +70,7 @@ const storeModel = (modelData, fileName) => {
   reader.readAsDataURL(modelBlob);
 };
 
-const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings,setModelFile }) => {
+const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
   const controlsRef = useRef();
@@ -81,8 +81,9 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
     }
   }, [showPreview, setHierarchy]);
 
+  const [modelFile, setModelFile] = useState(null); // Store uploaded file
+
   const handleFile = async (file) => {
-    setModelFile(file);
     if (file && (file.name.endsWith('.gltf') || file.name.endsWith('.glb'))) {
       const reader = new FileReader();
       setLoading(true);

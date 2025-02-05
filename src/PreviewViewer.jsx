@@ -50,7 +50,8 @@ const PreviewViewer = ({modelSettings } ) => {
   startIcon={<img src="/icons/Aricon.svg" />}
   onClick={handleUploadClick}
 >
- See in your Space
+
+    See in your Space
 </Button>
 
 

@@ -7,8 +7,6 @@ import Insceptor from "./Insceptor";
 import ModelLoader from "./ModelLoader";
 import WebPreview from './Webpreview';
 import PreviewViewer from "./PreviewViewer";
-import './amplifyConfig';
-
 
 
 export default function App() {
@@ -22,7 +20,6 @@ export default function App() {
     skybox: 'studio',
 
   });
-
 
   const handleWebPreview = () => {
     // Store the settings in the localStorage or URL parameters
@@ -73,6 +70,7 @@ export default function App() {
             Exit Preview
           </button>
 
+         
         </div>
       )}
 
