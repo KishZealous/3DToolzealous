@@ -16,6 +16,7 @@ const StyledListItem = styled(ListItem)(({ theme, level }) => ({
   }
 }));
 
+
 const Hierarchy = ({ hierarchy }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
 

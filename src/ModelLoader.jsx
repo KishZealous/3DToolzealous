@@ -55,7 +55,22 @@ const ModelViewer = ({ model }) => {
   return <primitive object={model.scene} />;
 };
 
-const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setEmbedUrl }) => {
+// Function to store the model (to local storage or trigger upload to S3)
+const storeModel = (modelData, fileName) => {
+  // Convert model data to blob and store in local storage (example)
+  const modelBlob = new Blob([modelData], { type: 'application/octet-stream' });
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    // Store the model in local storage
+    localStorage.setItem(fileName, reader.result);
+    console.log('Model stored in local storage:', fileName);
+  };
+
+  reader.readAsDataURL(modelBlob);
+};
+
+const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
   const controlsRef = useRef();
@@ -66,31 +81,13 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
     }
   }, [showPreview, setHierarchy]);
 
-  const uploadFileToNetlify = async (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await fetch('/.netlify/functions/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      
-      const data = await response.json();
-      console.log('Upload successful:', data.url);
-      setEmbedUrl(data.url); // Set the embed URL in parent state
-      return data.url;
-    } catch (error) {
-      console.error('Upload failed:', error);
-      return null;
-    }
-  };
+  const [modelFile, setModelFile] = useState(null); // Store uploaded file
 
   const handleFile = async (file) => {
     if (file && (file.name.endsWith('.gltf') || file.name.endsWith('.glb'))) {
       const reader = new FileReader();
       setLoading(true);
-
+  
       reader.onload = async (e) => {
         const loader = new GLTFLoader();
         try {
@@ -100,25 +97,26 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
           const extractedHierarchy = extractHierarchy(gltf.scene);
           setHierarchy(extractedHierarchy);
           
-          // Upload to Netlify Blob after successful parse
-          await uploadFileToNetlify(file);
+          // Model is not stored automatically here
+          // Call storeModel function from another script if needed
         } catch (error) {
           console.error('Error loading model:', error);
         } finally {
           setLoading(false);
         }
       };
-
+  
       reader.onerror = (error) => {
         console.error('File reading error:', error);
         setLoading(false);
       };
-
+  
       reader.readAsArrayBuffer(file);
     } else {
       alert('Please upload a .gltf or .glb file');
     }
   };
+
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -134,6 +132,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
   const handleDragOver = (event) => {
     event.preventDefault();
   };
+  
 
   return (
     <div className="model-loader-container">
@@ -180,7 +179,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
                   fullWidth
                   className="file-input"
                 >
-                 Browes Files
+                 Browse Files
                   <input
                     type="file"
                     accept=".gltf,.glb"

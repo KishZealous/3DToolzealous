@@ -13,7 +13,7 @@
 }
 
 .app-container {
-  background-color: #fcfcfc;
+  background-color: #EBEBEB;
   width: 70%; /* Changed from 100% to 70% */
   height: 100%;
   display: flex;
@@ -47,7 +47,7 @@
 
 .AppBg{
 
-  background-color: var(--app-bg-color, #8b8b8b); /* Fallback to #8b8b8b if variable not set */
+  background-color: var(--app-bg-color, #EBEBEB); /* Fallback to #8b8b8b if variable not set */
   transition: background-color 0.3s ease; /* Optional smooth transition */
 }
 
@@ -217,7 +217,7 @@ canvas {
 .exit-preview {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
   background-color: rgba(255, 0, 0, 0.8);
   color: white;
   padding: 8px 16px;
@@ -231,6 +231,21 @@ canvas {
 
 .exit-preview:hover {
   background-color: rgba(255, 0, 0, 1);
+}
+
+.web-preview {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: rgba(97, 4, 218, 0.923);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1100;
 }
 
 
@@ -249,4 +264,215 @@ canvas {
   justify-content: center;
   align-items: center;
   height: 100%;       /* Take full height to properly center */
+}
+
+/* Styling for the PreviewViewer container */
+.preview-viewer-container {
+  position: absolute;
+  top: 50%;
+  left: 10px; /* Adjust to move it to the left corner */
+  transform: translateY(-50%); /* Center it vertically */
+  width: 100px; /* Set width for the preview box */
+  height: 300px; /* Set height for the preview box */
+  border: 2px;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  padding: 16px; /* Padding inside the box */
+  z-index: 10; /* Make sure it stays on top */
+  animation: fadeIn 0.3s ease-out; /* Fade-in animation */
+  flex-direction: column; /* Arrange children in a column layout */
+  gap: 10px;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-50%) scale(0.9); }
+  to { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+/* Styling for the move button */
+.preview-viewer-container .movebutton {
+  background-color: #fbfbfb; /* Blue color */
+  color: white;
+  width: 47px;  /* Set a fixed width for the button */
+  height: 47px; /* Set a fixed height for the button */
+  border-radius: 10%; /* Make it circular */
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  justify-content: flex-end; /* Horizontally center the content */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+
+}
+
+/* Hover effect for the button */
+.preview-viewer-container .movebutton:hover {
+  background-color: #f4f4f4; /* Darker blue when hovered */
+}
+
+/* Styling for the button icon */
+.preview-viewer-container .movebutton img {
+  width: 20px;  /* Icon size */
+  height: 20px; /* Icon size */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Ensure no padding around the image */
+}
+
+
+/* Styling for the move button */
+.preview-viewer-container .zoomout {
+  background-color: #fbfbfb; /* Blue color */
+  color: white;
+  width: 47px;  /* Set a fixed width for the button */
+  height: 47px; /* Set a fixed height for the button */
+  border-radius: 10%; /* Make it circular */
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  justify-content: flex-end; /* Horizontally center the content */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+ 
+
+}
+
+/* Hover effect for the button */
+.preview-viewer-container .zoomout:hover {
+  background-color: #f4f4f4; /* Darker blue when hovered */
+}
+
+/* Styling for the button icon */
+.preview-viewer-container .zoomout img {
+  width: 20px;  /* Icon size */
+  height: 20px; /* Icon size */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Ensure no padding around the image */
+}
+
+/* Styling for the move button */
+.preview-viewer-container .zoomin  {
+  background-color: #fbfbfb; /* Blue color */
+  color: white;
+  width: 47px;  /* Set a fixed width for the button */
+  height: 47px; /* Set a fixed height for the button */
+  border-radius: 10%; /* Make it circular */
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  justify-content:flex-end; /* Horizontally center the content */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+
+}
+
+/* Hover effect for the button */
+.preview-viewer-container .zoomin:hover {
+  background-color: #f4f4f4; /* Darker blue when hovered */
+}
+
+/* Styling for the button icon */
+.preview-viewer-container .zoomin img {
+  width: 20px;  /* Icon size */
+  height: 20px; /* Icon size */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Ensure no padding around the image */
+}
+
+/* Styling for the move button */
+.preview-viewer-container .colorpicker  {
+  background-color: #fbfbfb; /* Blue color */
+  color: white;
+  width: 47px;  /* Set a fixed width for the button */
+  height: 47px; /* Set a fixed height for the button */
+  border-radius: 10%; /* Make it circular */
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  justify-content: flex-start; /* Horizontally center the content */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+ 
+
+}
+
+/* Hover effect for the button */
+.preview-viewer-container .colorpicker:hover {
+  background-color: #f4f4f4; /* Darker blue when hovered */
+}
+
+/* Styling for the button icon */
+.preview-viewer-container .colorpicker img {
+  width: 40px;  /* Icon size */
+  height: 40px; /* Icon size */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Ensure no padding around the image */
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .preview-viewer-container {
+    width: 80px;
+    height: 240px;
+    left: 5px;
+  }
+}
+
+.Arviewbutton-container {
+  position: absolute;
+  top: 46px;
+  right: 40px;
+  transform: translateY(-50%); /* Center it vertically */
+  width: 181.75px; /* Set width for the preview box */
+  height: 48.44px; /* Set height for the preview box */
+  border: 0px;
+  border-radius: 10px; /* Rounded corners */
+  display: block;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  padding: 6px; /* Padding inside the box */
+  z-index: 10; /* Make sure it stays on top */
+  animation: fadeIn 0.3s ease-out; /* Fade-in animation */
+  flex-direction: column; /* Arrange children in a column layout */
+  gap: 10px;
+  margin: 0;
+  
+}
+
+.Arviewbutton-container .ARbutton{
+
+  background-color: #fbfbfb; /* Blue color */
+  color: white;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  font-size: 60%;
+  text-align: left;
+  text-transform: uppercase;
+
+
+
+}
+.Arviewbutton-container .ARbutton img{
+  width: 20px;  /* Icon size */
+  height: 20px; /* Icon size */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Ensure no padding around the image */
+  left: 10px;
+
+}
+
+.Arviewbutton-container .ARbutton:hover{
+  background-color: #f4f4f4; /* Darker blue when hovered */
 }

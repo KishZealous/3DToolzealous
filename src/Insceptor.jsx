@@ -1,3 +1,5 @@
+//insceptor.jsx
+
 import React from 'react';
 import Button from '@mui/material/Button';
 import { pink } from '@mui/material/colors';
@@ -16,7 +18,7 @@ import IconButton from '@mui/joy/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Typography from '@mui/joy/Typography';
 
-const BgcustomColors = ['#ffffff', '#e7e7e7', '#c1c1c1', '#2c2c2c'];
+const BgcustomColors = ['#EBEBEB', '#F7F7F7', '#3E3E3E', '#1C1A1D'];
 
 const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview }) => {
   if (!selectedModel) {
@@ -67,7 +69,7 @@ const BackgroundSetting = () => {
   );
 };
 
-const BackgroundColorSelector = ({ colors = ['#df0a0a', '#00FF00', '#0000FF', '#FFFF00', '#800080'], defaultColor = '#df0a0a', onColorChange }) => {
+const BackgroundColorSelector = ({ colors = ['#EBEBEB', '#F7F7F7', '#FFFFFF', '#FFFF00', '#800080'], defaultColor = '#EBEBEB', onColorChange }) => {
   const [selectedColor, setSelectedColor] = React.useState(defaultColor);
 
   const handleColorChange = (event) => {
@@ -134,7 +136,7 @@ const SkyboxSelector = ({ onSelectionChange }) => {
 
   return (
     <Select
-      defaultValue="studio"
+      defaultValue="city"
       onChange={handleChange}
       variant="outlined"
       size="sm"
