@@ -1,3 +1,6 @@
+//ModelLoader.jsx
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, ContactShadows, Environment, Center, Html, Grid } from '@react-three/drei';
@@ -93,7 +96,7 @@ const storeModel = (modelData, fileName) => {
   reader.readAsDataURL(modelBlob);
 };
 
-const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings }) => {
+const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings,setModelUrl  }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -106,14 +109,18 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
   }, [showPreview, setHierarchy]);
 
   const handleUpload = async (file) => {
+    setLoading(true);
     try {
-await Storage.put(`models/${file.name}`, file, {
-  contentType: file.type,
-});
-      console.log('File uploaded successfully!');
-    } catch (error) {
-      console.error('Upload failed:', error);
+      const fileKey = `models/${file.name}`;
+      await Storage.put(fileKey, file, { contentType: file.type });
+      const url = await Storage.get(fileKey, { expires: 3600 });
+      setModelUrl(url);
+      console.log('Model uploaded:', url);
+    } catch (err) {
+      console.error('Upload failed:', err);
       setError('Error uploading model. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 

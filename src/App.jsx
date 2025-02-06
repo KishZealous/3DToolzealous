@@ -20,21 +20,9 @@ export default function App() {
     skybox: 'studio',
 
   });
+  const [modelUrl, setModelUrl] = useState(null);  // Store uploaded model URL
 
-  const handleWebPreview = () => {
-    // Store the settings in the localStorage or URL parameters
-    const settings = {
-      model: modelSettings.model, // Store the model data or URL (depending on your needs)
-      background: modelSettings.background,
-      skybox: modelSettings.skybox,
-    };
-    const settingsJson = encodeURIComponent(JSON.stringify(settings));
 
-    // Open WebPreview in a new tab with encoded settings in the URL
-    const previewWindow = window.open(`/webpreview?settings=${settingsJson}`, '_blank');
-    previewWindow.focus();
-    
-  };
 
 
 
@@ -53,12 +41,19 @@ export default function App() {
           selectedSkybox={selectedSkybox}
           setShowPreview={setShowPreview}
           showPreview={showPreview}
+          setModelUrl={setModelUrl}
         />
 
         {/* Show PreviewViewer only when showPreview is true */}
         {showPreview && (
-          <PreviewViewer  />
-        )}
+          <PreviewViewer modelUrl={modelUrl} />
+          
+          
+        
+        )
+        
+        
+        }
 
 
        

@@ -1,9 +1,30 @@
-import React from 'react'
-import { Button } from '@mui/material'
-import { FileUpload } from '@mui/icons-material'
+//PreviewViewer.jsx
+
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import { FileUpload } from '@mui/icons-material';
+import { QRCodeCanvas } from 'qrcode.react';
+import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 
 
-const PreviewViewer = ({modelSettings } ) => {
+const PreviewViewer = ({modelUrl  } ) => {
+  console.log("Model URL in PreviewViewer:", modelUrl); // Check if it's properly passed
+
+
+  const [qrOpen, setQrOpen] = useState(false);
+
+  const handleARView = () => {
+    setQrOpen(true); // Open QR code dialog
+    console.log(modelUrl)
+  };
+
+  const handleCloseQR = () => {
+    setQrOpen(false); // Close QR code dialog
+  };
+
+  const arViewUrl = modelUrl ? `${window.location.origin}/ar-view?modelUrl=${encodeURIComponent(modelUrl)}` : "";
+
+
 
     const handleUploadClick = () => {
         // Handle your upload logic here
@@ -48,16 +69,26 @@ const PreviewViewer = ({modelSettings } ) => {
   className="ARbutton"
   variant="contained"
   startIcon={<img src="/icons/Aricon.svg" />}
-  onClick={handleUploadClick}
+  onClick={handleARView}
 >
 
     See in your Space
 </Button>
-
-
-
 </div>
+{/* QR Code Dialog */}
+<Dialog open={qrOpen} onClose={handleCloseQR}>
+        <DialogTitle>Scan QR Code for AR View</DialogTitle>
+        <DialogContent>
+          {modelUrl ? (
+            <QRCodeCanvas value={arViewUrl} size={256} />
+          ) : (
+            <p>Model URL is not available</p>
+          )}
+          <p>Scan this QR code with your mobile device to view the model in AR.</p>
+        </DialogContent>
+      </Dialog>
 
+      
     </div>
   )
 }
