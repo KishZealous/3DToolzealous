@@ -4,6 +4,29 @@ import { OrbitControls, ContactShadows, Environment, Center, Html, Grid } from '
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 import { Card, CardContent, Typography, Button } from "@mui/material";
+import { Amplify } from 'aws-amplify';
+import { Storage } from '@aws-amplify/storage';
+import awsconfig from './aws-exports';
+
+
+Amplify.configure(awsconfig);
+
+// Helper function to dispose model resources
+const disposeModel = (scene) => {
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      if (child.geometry) child.geometry.dispose();
+      if (child.material) {
+        if (Array.isArray(child.material)) {
+          child.material.forEach(m => m.dispose());
+        } else {
+          child.material.dispose();
+        }
+      }
+    }
+  });
+};
+
 
 const extractHierarchy = (object, parentPath = '') => {
   const hierarchy = [];
@@ -73,6 +96,7 @@ const storeModel = (modelData, fileName) => {
 const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const controlsRef = useRef();
 
   useEffect(() => {
@@ -81,7 +105,18 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
     }
   }, [showPreview, setHierarchy]);
 
-  const [modelFile, setModelFile] = useState(null); // Store uploaded file
+  const handleUpload = async (file) => {
+    try {
+await Storage.put(`models/${file.name}`, file, {
+  contentType: file.type,
+});
+      console.log('File uploaded successfully!');
+    } catch (error) {
+      console.error('Upload failed:', error);
+      setError('Error uploading model. Please try again.');
+    }
+  };
+
 
   const handleFile = async (file) => {
     if (file && (file.name.endsWith('.gltf') || file.name.endsWith('.glb'))) {
@@ -94,6 +129,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
           const gltf = await loader.parseAsync(e.target.result, '');
           setUploadedModel(gltf);
           setSelectedModel(gltf);
+          await handleUpload(file);
           const extractedHierarchy = extractHierarchy(gltf.scene);
           setHierarchy(extractedHierarchy);
           
