@@ -10,6 +10,6 @@ export default defineConfig({
     global: 'window',
   },
   optimizeDeps: {
-    include: ['aws-amplify'],
+    include: ['aws-amplify','qrcode.react'],
   },
 })
