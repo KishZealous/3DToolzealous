@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { FileUpload } from '@mui/icons-material';
+import { QRCodeCanvas } from 'qrcode.react';
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
-import QRCode from 'qrcode.react'
 
 
 const PreviewViewer = ({modelUrl  } ) => {
@@ -80,13 +80,7 @@ const PreviewViewer = ({modelUrl  } ) => {
         <DialogTitle>Scan QR Code for AR View</DialogTitle>
         <DialogContent>
           {modelUrl ? (
-            <QRCode  value="https://google.com"
-            size={256} // Reduced size for better scanning
-            level="L"  // Low error correction level to reduce complexity
-            fgColor="#000000" // Set color to black for better contrast
-            bgColor="#ffffff" // Set background to white for clarity
-            includeMargin={false} // Removed margin to avoid excessive space
-             />
+            <QRCodeCanvas value={arViewUrl} size={256} />
           ) : (
             <p>Model URL is not available</p>
           )}
