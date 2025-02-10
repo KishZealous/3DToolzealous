@@ -41,15 +41,61 @@ const SharePage = () => {
 
   return (
     <div style={{ width: "100%", height: "100vh", background }}>
-      <Canvas camera={{ position: [0, 0, 3], fov: 40 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={0.5} />
+      <Canvas camera={{ position: [0, 0, 3], fov: 40 }}
+       dpr={[1, 2]}
+       className="AppBg"
+      >
+        <ambientLight intensity={0.2} />
+        {/* <pointLight position={[10, 10, 10]} intensity={0.5} /> */}
         <OrbitControls />
+        <ContactShadows position={[0, -0.4, 0]} opacity={0.5} scale={10} blur={1.5} far={1} />
         <Environment preset={skybox} background={false} />
         <Center>
           <ModelViewer modelUrl={modelUrl} />
         </Center>
       </Canvas>
+      <div className="preview-viewer-container">
+    <Button 
+  className="movebutton"
+  variant="contained"
+  startIcon={<img src="/icons/arrows.svg" />}
+  
+>   </Button>
+
+<Button 
+  className="zoomout"
+  variant="contained"
+  startIcon={<img src="/icons/zoom-out.svg" />}
+ 
+></Button>
+
+<Button 
+  className="zoomin"
+  variant="contained"
+  startIcon={<img src="/icons/zoom-in.svg" />}
+ 
+></Button>
+
+<Button 
+  className="colorpicker"
+  variant="contained"
+  startIcon={<img src="/icons/color-wheel.png" />}
+ 
+></Button>
+</div>
+
+<div className='Arviewbutton-container'>
+<Button 
+  className="ARbutton"
+  variant="contained"
+  startIcon={<img src="/icons/Aricon.svg" />}
+ 
+>
+
+    See in your Space
+</Button>
+</div>
+
     </div>
   );
 };
