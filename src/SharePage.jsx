@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Storage } from '@aws-amplify/storage';
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber"; // Import useThree
 import { OrbitControls, Environment, Center } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
@@ -54,8 +54,9 @@ const SharePage = () => {
   );
 };
 
+// ModelViewer component to load and display the 3D model
 const ModelViewer = ({ modelUrl }) => {
-  const { scene } = useThree();
+  const { scene } = useThree(); // Use the useThree hook
   const [model, setModel] = useState(null);
 
   useEffect(() => {
