@@ -233,6 +233,25 @@ canvas {
   background-color: rgba(255, 0, 0, 1);
 }
 
+.share-button {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  background-color: rgba(13, 0, 255, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1100;
+}
+
+.share-button:hover {
+  background-color: rgb(152, 152, 152);
+}
+
 .web-preview {
   position: absolute;
   top: 50px;
