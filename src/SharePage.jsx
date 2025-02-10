@@ -4,6 +4,7 @@ import { Storage } from '@aws-amplify/storage';
 import { Canvas, useThree } from "@react-three/fiber"; // Import useThree
 import { OrbitControls, Environment, Center } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 const SharePage = () => {
   const { shareId } = useParams();
