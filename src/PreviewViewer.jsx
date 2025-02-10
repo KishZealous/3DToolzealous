@@ -1,66 +1,73 @@
-//PreviewViewer.jsx
+import React, { useState, useEffect } from "react";
+import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
+import { QRCodeCanvas } from "qrcode.react";
 
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
-import { FileUpload } from '@mui/icons-material';
-import { QRCodeCanvas } from 'qrcode.react';
-import { Dialog, DialogTitle, DialogContent } from '@mui/material';
-
-
-const PreviewViewer = ({modelUrl  } ) => {
-  console.log("Model URL in PreviewViewer:", modelUrl); // Check if it's properly passed
-
+const PreviewViewer = ({ modelUrl }) => {
+  console.log("🔗 Model URL received in PreviewViewer:", modelUrl);
 
   const [qrOpen, setQrOpen] = useState(false);
+  const [shortUrl, setShortUrl] = useState(null);
+
+  // Generate a shortened URL for better QR scanning
+  useEffect(() => {
+    if (modelUrl) {
+      const shortenUrl = async () => {
+        try {
+          const response = await fetch(
+            `https://tinyurl.com/api-create.php?url=${encodeURIComponent(modelUrl)}`
+          );
+          const shortened = await response.text();
+          setShortUrl(shortened);
+          console.log("✅ Shortened URL:", shortened);
+        } catch (error) {
+          console.error("❌ Short URL generation failed:", error);
+          setShortUrl(modelUrl); // Fallback to original URL
+        }
+      };
+      shortenUrl();
+    }
+  }, [modelUrl]);
 
   const handleARView = () => {
-    setQrOpen(true); // Open QR code dialog
-    console.log(modelUrl)
+    setQrOpen(true);
   };
 
   const handleCloseQR = () => {
-    setQrOpen(false); // Close QR code dialog
+    setQrOpen(false);
   };
 
-  const arViewUrl = modelUrl ? `${window.location.origin}/ar-view?modelUrl=${encodeURIComponent(modelUrl)}` : "";
-
-
-
-    const handleUploadClick = () => {
-        // Handle your upload logic here
-        console.log('Upload button clicked')
-      }
+  const qrCodeValue = shortUrl || modelUrl; // Use shortened URL if available
+  console.log("📱 QR Code Value:", qrCodeValue);
 
   return (
-
     <div>
     <div className="preview-viewer-container">
 <Button 
   className="movebutton"
   variant="contained"
   startIcon={<img src="/icons/arrows.svg" />}
-  onClick={handleUploadClick}
+  
 ></Button>
 
 <Button 
   className="zoomout"
   variant="contained"
   startIcon={<img src="/icons/zoom-out.svg" />}
-  onClick={handleUploadClick}
+ 
 ></Button>
 
 <Button 
   className="zoomin"
   variant="contained"
   startIcon={<img src="/icons/zoom-in.svg" />}
-  onClick={handleUploadClick}
+ 
 ></Button>
 
 <Button 
   className="colorpicker"
   variant="contained"
   startIcon={<img src="/icons/color-wheel.png" />}
-  onClick={handleUploadClick}
+ 
 ></Button>
 </div>
 
@@ -79,8 +86,8 @@ const PreviewViewer = ({modelUrl  } ) => {
 <Dialog open={qrOpen} onClose={handleCloseQR}>
         <DialogTitle>Scan QR Code for AR View</DialogTitle>
         <DialogContent>
-          {modelUrl ? (
-            <QRCodeCanvas value={arViewUrl} size={256} />
+          {qrCodeValue ? (
+            <QRCodeCanvas value={qrCodeValue} size={256} />
           ) : (
             <p>Model URL is not available</p>
           )}
@@ -90,7 +97,7 @@ const PreviewViewer = ({modelUrl  } ) => {
 
       
     </div>
-  )
-}
+  );
+};
 
-export default PreviewViewer
+export default PreviewViewer;

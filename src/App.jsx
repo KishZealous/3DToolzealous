@@ -5,7 +5,6 @@ import Viewcanvas from "./viewcanvas";
 import Hierarchy from "./hierarchy";
 import Insceptor from "./Insceptor";
 import ModelLoader from "./ModelLoader";
-import WebPreview from './Webpreview';
 import PreviewViewer from "./PreviewViewer";
 
 
