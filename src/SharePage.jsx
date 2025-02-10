@@ -48,7 +48,7 @@ const SharePage = () => {
         <ambientLight intensity={0.2} />
         {/* <pointLight position={[10, 10, 10]} intensity={0.5} /> */}
         <OrbitControls />
-        <ContactShadows position={[0, -0.4, 0]} opacity={0.5} scale={10} blur={1.5} far={1} />
+        
         <Environment preset={skybox} background={false} />
         <Center>
           <ModelViewer modelUrl={modelUrl} />
