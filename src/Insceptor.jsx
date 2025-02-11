@@ -20,7 +20,7 @@ import Typography from '@mui/joy/Typography';
 
 const BgcustomColors = ['#EBEBEB', '#F7F7F7', '#3E3E3E', '#1C1A1D'];
 
-const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview }) => {
+const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview ,setModelSettings }) => {
   if (!selectedModel) {
     return <div className="no-model-message">No model Uploaded</div>;
   }
@@ -37,7 +37,7 @@ const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview }) => {
       </Box>
 
       {/* Background Settings */}
-      <BackgroundSetting />
+      <BackgroundSetting setModelSettings={setModelSettings} /> 
 
       {/* Skybox Settings */}
       <SkyboxSetting onSkyboxChange={onSkyboxChange} />
@@ -48,8 +48,11 @@ const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview }) => {
   );
 };
 
-const BackgroundSetting = () => {
+const BackgroundSetting = ({setModelSettings }) => {
   const handleColorChange = (color) => {
+
+    setModelSettings(prev => ({ ...prev, background: color }));
+
     const appBgElements = document.getElementsByClassName('AppBg');
     for (let element of appBgElements) {
       element.style.backgroundColor = color;
@@ -63,7 +66,9 @@ const BackgroundSetting = () => {
           <SettingsIcon sx={{ mr: 1, fontSize: '0.8rem' }} />
           Background Settings
         </Typography>
-        <BackgroundColorSelector colors={BgcustomColors} defaultColor='#df0a0a' onColorChange={handleColorChange} />
+        <BackgroundColorSelector colors={BgcustomColors}
+         defaultColor='#df0a0a' 
+         onColorChange={handleColorChange} />
       </Box>
     </div>
   );

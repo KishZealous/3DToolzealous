@@ -204,7 +204,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
         <ambientLight intensity={0.2} />
         <OrbitControls ref={controlsRef} />
         <ContactShadows position={[0, -0.4, 0]} opacity={0.5} scale={10} blur={1.5} far={1} />
-        <Environment preset={selectedSkybox || 'studio'} background={false} />
+        <Environment preset={selectedSkybox || 'city'} background={false} />
         <Center>
           <ModelViewer model={uploadedModel} />
         </Center>

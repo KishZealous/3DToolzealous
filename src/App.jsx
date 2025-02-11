@@ -11,12 +11,12 @@ import { Storage } from '@aws-amplify/storage';
 export default function App() {
   const [hierarchy, setHierarchy] = useState([]);
   const [selectedModel, setSelectedModel] = useState(null);
-  const [selectedSkybox, setSelectedSkybox] = useState("studio");
+  const [selectedSkybox, setSelectedSkybox] = useState("city");
   const [showPreview, setShowPreview] = useState(false);
   const [modelSettings, setModelSettings] = useState({
     model: null,
     background: '#ffffff',  // default background color
-    skybox: 'studio',
+    skybox: 'city',
   });
   const [modelUrl, setModelUrl] = useState(null);  // Store uploaded model URL
 
@@ -100,6 +100,7 @@ export default function App() {
             selectedModel={selectedModel}
             onSkyboxChange={setSelectedSkybox}
             setShowPreview={setShowPreview}
+            setModelSettings={setModelSettings}
           />
         </div>
       )}
