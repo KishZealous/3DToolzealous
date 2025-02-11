@@ -118,14 +118,21 @@ const SharePage = () => {
 
 {/* AR View Button */}
 <div className="Arviewbutton-container">
-        <Button
-          className="ARbutton"
-          variant="contained"
-          startIcon={<img src="/icons/Aricon.svg" />}
-          onClick={() => document.getElementById("arViewer").click()} // ✅ Open AR view
+        <model-viewer
+          id="arViewer"
+          src={modelUrl}
+          alt="3D Model"
+          ar
+          ar-modes="scene-viewer webxr quick-look"
+          camera-controls
+          auto-rotate
+          style={{ width: "100%", height: "0px", visibility: "hidden" }}
         >
-          See in Your Space
-        </Button>
+          <button slot="ar-button" className="ARbutton">
+            See in Your Space
+          </button>
+          </model-viewer>
+
       </div>
 
       {/* Hidden Model Viewer for AR */}
