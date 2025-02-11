@@ -13,6 +13,7 @@
     "@aws-amplify/storage": "^5.9.16",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@google/model-viewer": "^4.0.0",
     "@mui/icons-material": "^6.4.1",
     "@mui/joy": "^5.0.0-beta.51",
     "@mui/material": "^6.4.1",
@@ -29,7 +30,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.5",
-    "three": "^0.172.0"
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

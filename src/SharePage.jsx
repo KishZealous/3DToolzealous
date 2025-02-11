@@ -116,18 +116,30 @@ const SharePage = () => {
 ></Button>
 </div>
 
-<div className='Arviewbutton-container'>
-<Button 
-  className="ARbutton"
-  variant="contained"
-  startIcon={<img src="/icons/Aricon.svg" />}
- 
->
+{/* AR View Button */}
+<div className="Arviewbutton-container">
+        <Button
+          className="ARbutton"
+          variant="contained"
+          startIcon={<img src="/icons/Aricon.svg" />}
+          onClick={() => document.getElementById("arViewer").click()} // ✅ Open AR view
+        >
+          See in Your Space
+        </Button>
+      </div>
 
-    See in your Space
-</Button>
-</div>
-
+      {/* Hidden Model Viewer for AR */}
+      {modelUrl && (
+        <model-viewer
+          id="arViewer"
+          src={modelUrl}
+          alt="3D Model"
+          ar
+          ar-modes="scene-viewer webxr quick-look"
+          camera-controls
+          style={{ display: "none" }} // Hide, but allow clicking through button
+        ></model-viewer>
+      )}
     </div>
   );
 };
