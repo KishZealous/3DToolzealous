@@ -58,6 +58,31 @@ const SharePage = () => {
     return <div>Loading...</div>;
   }
 
+    // ✅ Function to Open AR Mode
+    const openARView = () => {
+      if (!modelUrl) {
+        alert("Model not found!");
+        return;
+      }
+  
+      const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      const isAndroid = /Android/.test(navigator.userAgent);
+  
+      if (isIOS) {
+        // ✅ Open Apple Quick Look (iOS)
+        window.location.href = modelUrl.replace(".glb", ".usdz"); // Ensure USDZ is available
+      } else if (isAndroid) {
+        // ✅ Open Google Scene Viewer (Android)
+        window.location.href = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(modelUrl)}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;end;`;
+      } else if (navigator.xr) {
+        // ✅ Open WebXR for Desktop/Mobile Browsers that support it
+        alert("WebXR not implemented yet. Try opening this on a mobile device for AR.");
+      } else {
+        alert("Your device does not support AR.");
+      }
+    };
+  
+
   return (
     <div style={{ width: "100%", height: "100vh" }}>
       {modelLoading && (
@@ -118,35 +143,16 @@ const SharePage = () => {
 
 {/* AR View Button */}
 <div className="Arviewbutton-container">
-        <model-viewer
-          id="arViewer"
-          src={modelUrl}
-          alt="3D Model"
-          ar
-          ar-modes="scene-viewer webxr quick-look"
-          camera-controls
-          auto-rotate
-          style={{ width: "100%", height: "0px", visibility: "hidden" }}
+        <Button
+          className="ARbutton"
+          variant="contained"
+          startIcon={<img src="/icons/Aricon.svg" />}
+          onClick={openARView} // ✅ Call function to open AR
         >
-          <button slot="ar-button" className="ARbutton">
-            See in Your Space
-          </button>
-          </model-viewer>
-
+          See in your Space
+        </Button>
       </div>
 
-      {/* Hidden Model Viewer for AR */}
-      {modelUrl && (
-        <model-viewer
-          id="arViewer"
-          src={modelUrl}
-          alt="3D Model"
-          ar
-          ar-modes="scene-viewer webxr quick-look"
-          camera-controls
-          style={{ display: "none" }} // Hide, but allow clicking through button
-        ></model-viewer>
-      )}
     </div>
   );
 };
