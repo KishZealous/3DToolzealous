@@ -41,7 +41,7 @@ const SharePage = () => {
   }
 
   return (
-    <div className="model-loader-container">
+    <div style={{ width: "100%", height: "100vh", background }}>
       <Canvas camera={{ position: [0, 0, 3], fov: 40 }}
        dpr={[1, 2]}
        className="AppBg"
