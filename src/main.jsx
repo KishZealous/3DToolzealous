@@ -1,21 +1,36 @@
-import { StrictMode } from "react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import routing components
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; 
 import "./index.css";
-import App from "./App.jsx";
-import SharePage from "./SharePage.jsx"; // Import the SharePage component
+import App from "./App.jsx"; 
+import SharePage from "./SharePage.jsx"; 
+import Login from "./Login.jsx";
 
-// Render the app with routing
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
+const Main = () => {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  return (
     <Router>
       <Routes>
-        {/* Default route for the main app */}
-        <Route path="/" element={<App />} />
+        {/* ✅ Login Page */}
+        <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />
 
-        {/* Route for the shareable page */}
+        {/* ✅ Protected Route - Redirects to Login if not authenticated */}
+        <Route path="/app" element={authenticated ? <App /> : <Navigate to="/login" />} />
+
+        {/* ✅ Share Page - Does not require login */}
         <Route path="/share/:shareId" element={<SharePage />} />
+
+        {/* ✅ Default Route - Redirect to Login */}
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
+  );
+};
+
+// Render the app
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <Main />
   </StrictMode>
 );
