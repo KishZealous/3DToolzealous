@@ -17,10 +17,12 @@ import Option from '@mui/joy/Option';
 import IconButton from '@mui/joy/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Typography from '@mui/joy/Typography';
+import GridOnIcon from "@mui/icons-material/GridOn";
+import GridOffIcon from "@mui/icons-material/GridOff";
 
 const BgcustomColors = ['#EBEBEB', '#F7F7F7', '#3E3E3E', '#1C1A1D'];
 
-const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview ,setModelSettings }) => {
+const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview ,setModelSettings,setShowGrid, showGrid }) => {
   if (!selectedModel) {
     return <div className="no-model-message">No model Uploaded</div>;
   }
@@ -44,6 +46,9 @@ const Inspector = ({ selectedModel, onSkyboxChange, setShowPreview ,setModelSett
 
       {/* Preview Button */}
       <PreviewButton setShowPreview={setShowPreview} />
+
+      {/* ✅ Grid Setting Component */}
+      <GridSetting setShowGrid={setShowGrid} showGrid={showGrid} />
     </Box>
   );
 };
@@ -166,6 +171,23 @@ const PreviewButton = ({ setShowPreview }) => {
       <Typography level="h4" sx={{ mb: 2 }}>Preview</Typography>
       <Button variant="contained" fullWidth onClick={handlePreview}>
         Open Preview
+      </Button>
+    </Box>
+  );
+};
+const GridSetting = ({ setShowGrid, showGrid }) => {
+  return (
+    <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "sm", mb: 2 }}>
+      <Typography variant="h6">Grid Settings</Typography>
+
+      {/* ✅ Grid Toggle Button */}
+      <Button
+        variant="contained"
+        startIcon={showGrid ? <GridOffIcon /> : <GridOnIcon />}
+        onClick={() => setShowGrid((prev) => !prev)}
+        sx={{ mt: 2 }}
+      >
+        {showGrid ? "Hide Grid" : "Show Grid"}
       </Button>
     </Box>
   );

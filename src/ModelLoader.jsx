@@ -96,7 +96,7 @@ const storeModel = (modelData, fileName) => {
   reader.readAsDataURL(modelBlob);
 };
 
-const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings,setModelUrl  }) => {
+const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings,setModelUrl,showGrid  }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -186,7 +186,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        {!showPreview && (
+        {!showPreview && showGrid &&(
           <Grid
             position={[0, -0.5, 0]}
             cellSize={0.5}

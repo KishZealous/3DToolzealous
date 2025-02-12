@@ -72,7 +72,7 @@ const Hierarchy = ({ hierarchy }) => {
         })}
       </List>
 
-      <Button 
+      {/* <Button 
         variant="contained" 
         fullWidth
         size="small"
@@ -80,7 +80,7 @@ const Hierarchy = ({ hierarchy }) => {
         // Upload functionality (keeping button)
       >
         Upload to Aws
-      </Button>
+      </Button> */}
     </Box>
   );
 };

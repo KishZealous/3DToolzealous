@@ -19,6 +19,7 @@ export default function App() {
     skybox: 'city',
   });
   const [modelUrl, setModelUrl] = useState(null);  // Store uploaded model URL
+  const [showGrid, setShowGrid] = useState(true); // ✅ Add Grid toggle state
 
   // Function to generate a shareable link
   const handleShare = async () => {
@@ -74,6 +75,7 @@ export default function App() {
           setShowPreview={setShowPreview}
           showPreview={showPreview}
           setModelUrl={setModelUrl}
+          showGrid={showGrid}
         />
 
         {/* Show PreviewViewer only when showPreview is true */}
@@ -101,6 +103,8 @@ export default function App() {
             onSkyboxChange={setSelectedSkybox}
             setShowPreview={setShowPreview}
             setModelSettings={setModelSettings}
+            setShowGrid={setShowGrid} // ✅ Pass Grid toggle function
+            showGrid={showGrid} // ✅ Pass Grid state
           />
         </div>
       )}
