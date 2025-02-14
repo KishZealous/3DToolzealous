@@ -16,7 +16,7 @@ const Login = ({ setAuthenticated }) => {
 
     // Dummy authentication logic
     setTimeout(() => {
-      if (email === "Admin" && password === "Z@123") {
+      if (email === "kishorexr@Zealous.com" && password === "Z@123") {
         setAuthenticated(true);
         navigate("/app"); // Redirect to the main app page
       } else {
@@ -41,7 +41,7 @@ const Login = ({ setAuthenticated }) => {
 
         <form onSubmit={handleLogin}>
           <TextField
-            label="UserName"
+            label="Email"
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}

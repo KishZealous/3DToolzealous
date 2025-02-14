@@ -168,7 +168,7 @@ const PreviewButton = ({ setShowPreview }) => {
 
   return (
     <Box sx={{ p: 2, border: '1px solid #ddd', borderRadius: 'sm', mt: 2 }}>
-      <Typography level="h4" sx={{ mb: 1 }}>Preview</Typography>
+      <Typography level="h4" sx={{ mb: 2 }}>Preview</Typography>
       <Button variant="contained" fullWidth onClick={handlePreview}>
         Open Preview
       </Button>
@@ -178,7 +178,8 @@ const PreviewButton = ({ setShowPreview }) => {
 const GridSetting = ({ setShowGrid, showGrid }) => {
   return (
     <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "sm", mb: 2 }}>
-     <Typography level="h4" sx={{ mb: 0 }}>Grid Setting</Typography>
+      <Typography variant="h6">Grid Settings</Typography>
+
       {/* ✅ Grid Toggle Button */}
       <Button
         variant="contained"
