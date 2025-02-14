@@ -28,8 +28,23 @@ export default function App() {
       return;
     }
 
-    // Create a unique ID for the shareable link
-    const shareId = `share-${Date.now()}`;
+    // Generate unique file names
+  const timestamp = Date.now();
+  const modelFileName = `models/model-${timestamp}.glb`;
+  const jsonFileName = `models/model-${timestamp}.json`;
+
+  try {
+    // Upload model to S3
+    await Storage.put(modelFileName, modelUrl, {
+      contentType: "model/gltf-binary",
+    });
+    const uploadedModelUrl = await Storage.get(modelFileName, { expires: 3600 });
+
+    // // Create a unique ID for the shareable link
+    // const shareId = `share-${Date.now()}`;
+
+    // Update modelUrl state to point to S3 URL
+    setModelUrl(uploadedModelUrl); 
 
     // Save the model and settings to S3
     const shareData = {
@@ -39,11 +54,11 @@ export default function App() {
       previewIcons: true, // Indicate that preview icons should be shown
     };
 
-    try {
-      // Save the share data to S3
-      await Storage.put(`${shareId}.json`, JSON.stringify(shareData), {
-        contentType: "application/json",
-      });
+    // Upload JSON metadata
+    await Storage.put(jsonFileName, JSON.stringify(shareData), {
+      contentType: "application/json",
+    });
+
 
       // Generate the shareable link
       const shareUrl = `${window.location.origin}/share/${shareId}`;

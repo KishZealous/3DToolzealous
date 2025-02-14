@@ -136,12 +136,9 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
           const gltf = await loader.parseAsync(e.target.result, '');
           setUploadedModel(gltf);
           setSelectedModel(gltf);
-          await handleUpload(file);
+          setModelUrl(file); // Store file reference instead of URL
           const extractedHierarchy = extractHierarchy(gltf.scene);
           setHierarchy(extractedHierarchy);
-          
-          // Model is not stored automatically here
-          // Call storeModel function from another script if needed
         } catch (error) {
           console.error('Error loading model:', error);
         } finally {
@@ -159,6 +156,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
       alert('Please upload a .gltf or .glb file');
     }
   };
+  
 
 
   const handleDrop = (event) => {
