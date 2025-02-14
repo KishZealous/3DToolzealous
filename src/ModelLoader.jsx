@@ -96,7 +96,7 @@ const storeModel = (modelData, fileName) => {
   reader.readAsDataURL(modelBlob);
 };
 
-const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings,setModelUrl,showGrid  }) => {
+const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPreview, showPreview, setModelSettings,setModelUrl,setModelFile,showGrid  }) => {
   const [uploadedModel, setUploadedModel] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -136,7 +136,7 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
           const gltf = await loader.parseAsync(e.target.result, '');
           setUploadedModel(gltf);
           setSelectedModel(gltf);
-          await handleUpload(file);
+          setModelFile(file); // Pass the file to the parent component
           const extractedHierarchy = extractHierarchy(gltf.scene);
           setHierarchy(extractedHierarchy);
           
