@@ -5,7 +5,7 @@ const awsconfig = {
     },
     Storage: {
       AWSS3: {
-        bucket: 'z-storage', // Your S3 bucket name
+        bucket: 'zspace-demo', // Your S3 bucket name
         region: 'ap-south-1',
       }
     }
