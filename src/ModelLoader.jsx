@@ -112,18 +112,13 @@ const ModelLoader = ({ setHierarchy, setSelectedModel, selectedSkybox, setShowPr
     setLoading(true);
     try {
       const fileKey = `models/${file.name}`;
-      await Storage.put(fileKey, file, {
-        contentType: file.type,
-        level: "public",  // Ensure public access (or adjust as needed)
-        useAccelerateEndpoint: true, // Uses S3 Transfer Acceleration for large files
-      });
-  
+      await Storage.put(fileKey, file, { contentType: file.type });
       const url = await Storage.get(fileKey, { expires: 3600 });
       setModelUrl(url);
-      console.log("Model uploaded:", url);
+      console.log('Model uploaded:', url);
     } catch (err) {
-      console.error("Upload failed:", err);
-      setError("Error uploading model. Please try again.");
+      console.error('Upload failed:', err);
+      setError('Error uploading model. Please try again.');
     } finally {
       setLoading(false);
     }
