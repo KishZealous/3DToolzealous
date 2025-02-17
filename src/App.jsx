@@ -20,57 +20,41 @@ export default function App() {
   });
   const [modelUrl, setModelUrl] = useState(null);  // Store uploaded model URL
   const [showGrid, setShowGrid] = useState(true); // ✅ Add Grid toggle state
-  const [modelFile, setModelFile] = useState(null); // Store the uploaded file
 
-  // ✅ Generic function to upload a file to S3
-  const uploadToS3 = async (file, key, contentType) => {
-    try {
-      await Storage.put(key, file, { contentType });
-      return await Storage.get(key, { expires: 3600 });
-    } catch (error) {
-      console.error("Error uploading to S3:", error);
-      alert("Failed to upload file. Please try again.");
-      return null;
-    }
-  };
-
-  // ✅ Function to generate a shareable link
+  // Function to generate a shareable link
   const handleShare = async () => {
-    if (!modelFile) {
-      alert("No model selected. Please import a model first.");
+    if (!modelUrl) {
+      alert("No model loaded. Please upload a model first.");
       return;
     }
 
+    // Create a unique ID for the shareable link
+    const shareId = `share-${Date.now()}`;
+
+    // Save the model and settings to S3
+    const shareData = {
+      modelUrl,
+      skybox: selectedSkybox,
+      background: modelSettings.background,
+      previewIcons: true, // Indicate that preview icons should be shown
+    };
+
     try {
-      const fileKey = `models/${modelFile.name}`;
-      const uploadedModelUrl = await uploadToS3(modelFile, fileKey, modelFile.type);
-      if (!uploadedModelUrl) return;
+      // Save the share data to S3
+      await Storage.put(`${shareId}.json`, JSON.stringify(shareData), {
+        contentType: "application/json",
+      });
 
-      setModelUrl(uploadedModelUrl);
-
-      const shareId = `share-${Date.now()}`;
-      const shareData = {
-        modelUrl: uploadedModelUrl,
-        skybox: selectedSkybox,
-        background: modelSettings.background,
-        previewIcons: true,
-      };
-
-      const shareFileKey = `${shareId}.json`;
-      const uploadedShareUrl = await uploadToS3(
-        new Blob([JSON.stringify(shareData)], { type: "application/json" }),
-        shareFileKey,
-        "application/json"
-      );
-      if (!uploadedShareUrl) return;
-
+      // Generate the shareable link
       const shareUrl = `${window.location.origin}/share/${shareId}`;
       console.log("Shareable URL:", shareUrl);
+
+      // Copy the link to the clipboard
       navigator.clipboard.writeText(shareUrl).then(() => {
         alert("Shareable link copied to clipboard!");
       });
     } catch (error) {
-      console.error("Error generating share link:", error);
+      console.error("Error generating shareable link:", error);
       alert("Failed to generate shareable link. Please try again.");
     }
   };
@@ -91,7 +75,6 @@ export default function App() {
           setShowPreview={setShowPreview}
           showPreview={showPreview}
           setModelUrl={setModelUrl}
-          setModelFile={setModelFile}
           showGrid={showGrid}
         />
 
